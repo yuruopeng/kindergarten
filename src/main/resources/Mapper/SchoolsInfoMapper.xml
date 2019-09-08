@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianshu.kindergarten.Mapper.SchoolsInfoMapper">
+
+    <select id="findKindergartenList" parameterType="int" resultType="com.qianshu.kindergarten.dto.SchoolRegistrationDTO">
+        SELECT si.id,si.name,si.address,si.people,si.province,si.city,si.county,si.logourl,sr.price,sr.registration_not
+        FROM schools_info si
+        LEFT JOIN schools_registration sr
+        ON si.id = sr.school_info_id
+        <if test="sort==1">
+            ORDER BY sr.price ASC
+        </if>
+        <if test="sort==2">
+            ORDER BY sr.price DESC
+        </if>
+    </select>
+
+    <select id="findKindergarten" parameterType="String" resultType="com.qianshu.kindergarten.dto.SchoolRegistrationDTO">
+        SELECT si.id,si.name,si.address,si.people,si.province,si.city,si.county,si.logourl,sr.price,sr.registration_not
+        FROM schools_info si
+        LEFT JOIN schools_registration sr
+        ON si.id = sr.school_info_id
+        <where>
+            <if test="_parameter!=null">
+                AND LOCATE(#{name},si.name) > 0
+            </if>
+        </where>
+    </select>
+
+    <select id="findKindergartenListLimit" resultType="com.qianshu.kindergarten.dto.SchoolRegistrationDTO">
+        SELECT si.id,si.name,si.address,si.people,si.province,si.city,si.county,si.logourl,sr.price,sr.registration_not
+        FROM schools_info si
+        LEFT JOIN schools_registration sr
+        ON si.id = sr.school_info_id
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+    <select id="findSchool" parameterType="Integer" resultType="com.qianshu.kindergarten.entity.SchoolsInfo">
+        SELECT * FROM schools_info WHERE id = #{id}
+    </select>
+
+    <select id="findSchoolsList" resultType="com.qianshu.kindergarten.entity.SchoolsInfo">
+        SELECT * FROM schools_info
+    </select>
+
+    <insert id="insertSchool" parameterType="com.qianshu.kindergarten.entity.SchoolsInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO schools_info(
+        <trim suffixOverrides=",">
+            <if test="name!=null">
+                name,
+            </if>
+            <if test="address!=null">
+                address,
+            </if>
+            <if test="people!=null">
+                people,
+            </if>
+            <if test="province!=null">
+                province,
+            </if>
+            <if test="city!=null">
+                city,
+            </if>
+            <if test="county!=null">
+                county,
+            </if>
+            <if test="logourl!=null">
+                logourl,
+            </if>
+            <if test="create_time!=null">
+                create_time,
+            </if>
+            <if test="phone!=null">
+                phone,
+            </if>
+            <if test="signup_time!=null">
+                signup_time,
+            </if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="name!=null">
+                #{name},
+            </if>
+            <if test="address!=null">
+                #{address},
+            </if>
+            <if test="people!=null">
+                #{people},
+            </if>
+            <if test="province!=null">
+                #{province},
+            </if>
+            <if test="city!=null">
+                #{city},
+            </if>
+            <if test="county!=null">
+                #{county},
+            </if>
+            <if test="logourl!=null">
+                #{logourl},
+            </if>
+            <if test="create_time!=null">
+                #{create_time},
+            </if>
+            <if test="phone!=null">
+                #{phone},
+            </if>
+            <if test="signup_time!=null">
+                #{signup_time},
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <delete id="deleteSchool" parameterType="Integer">
+        DELETE FROM schools_info WHERE id = #{id}
+    </delete>
+</mapper>

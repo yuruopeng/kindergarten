@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianshu.kindergarten.Mapper.SellerInfoMapper">
+    <select id="findUser" parameterType="String" resultType="com.qianshu.kindergarten.entity.SellerInfo">
+        SELECT * FROM seller_info
+          <where>
+              <if test="_parameter!=null">
+                  AND LOCATE(#{username},username) > 0
+              </if>
+          </where>
+        <if test="sort==1">
+            ORDER BY openid ASC
+        </if>
+        <if test="sort==2">
+            ORDER BY openid DESC
+        </if>
+    </select>
+
+    <select id="findUserList" resultType="com.qianshu.kindergarten.entity.SellerInfo">
+        SELECT * FROM seller_info
+    </select>
+
+    <sql id="key">
+        <trim suffixOverrides=",">
+            <if test="username!=null">
+                username,
+            </if>
+            <if test="password!=null">
+                password,
+            </if>
+            <if test="openid!=null">
+                openid,
+            </if>
+            <if test="create_time!=null">
+                create_time,
+            </if>
+            <if test="update_time!=null">
+                update_time,
+            </if>
+        </trim>
+    </sql>
+    <sql id="value">
+        <trim suffixOverrides=",">
+            <if test="username!=null">
+                #{username},
+            </if>
+            <if test="password!=null">
+                #{password},
+            </if>
+            <if test="openid!=null">
+                #{openid},
+            </if>
+            <if test="create_time!=null">
+                #{create_time},
+            </if>
+            <if test="update_time!=null">
+                #{update_time},
+            </if>
+        </trim>
+    </sql>
+
+    <insert id="insertUser" parameterType="com.qianshu.kindergarten.entity.SellerInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO seller_info(
+        <trim suffixOverrides=",">
+            <if test="username!=null">
+                username,
+            </if>
+            <if test="password!=null">
+                password,
+            </if>
+            <if test="openid!=null">
+                openid,
+            </if>
+            <if test="create_time!=null">
+                create_time,
+            </if>
+            <if test="update_time!=null">
+                update_time,
+            </if>
+            <if test="image!=null">
+                image,
+            </if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="username!=null">
+                #{username},
+            </if>
+            <if test="password!=null">
+                #{password},
+            </if>
+            <if test="openid!=null">
+                #{openid},
+            </if>
+            <if test="create_time!=null">
+                #{create_time},
+            </if>
+            <if test="update_time!=null">
+                #{update_time},
+            </if>
+            <if test="image!=null">
+                #{image},
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <delete id="deleteUser" parameterType="Integer">
+        DELETE FROM seller_info WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteUsers" parameterType="java.util.List">
+        DELETE FROM seller_info WHERE id IN ${ids}
+    </delete>
+
+    <select id="findUserByUserAndPwd" resultType="com.qianshu.kindergarten.entity.SellerInfo">
+        SELECT * FROM seller_info WHERE username = #{username} AND password = #{password}
+    </select>
+</mapper>

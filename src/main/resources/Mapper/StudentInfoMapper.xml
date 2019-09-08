@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianshu.kindergarten.Mapper.StudentInfoMapper">
+    <select id="findStudent" parameterType="Integer" resultType="com.qianshu.kindergarten.entity.StudentInfo">
+        SELECT * FROM student_info WHERE id = #{id}
+    </select>
+
+    <select id="findStudentsList" resultType="com.qianshu.kindergarten.entity.StudentInfo">
+        SELECT * FROM student_info
+    </select>
+
+    <insert id="insertStudent" parameterType="com.qianshu.kindergarten.entity.StudentInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO student_info(
+        <trim suffixOverrides=",">
+            <if test="name!=null">
+                name,
+            </if>
+            <if test="sex!=null">
+                sex,
+            </if>
+            <if test="age!=null">
+                age,
+            </if>
+            <if test="identity!=null">
+                identity,
+            </if>
+            <if test="father_name!=null">
+                father_name,
+            </if>
+            <if test="mother_name!=null">
+                mother_name,
+            </if>
+            <if test="phone!=null">
+                phone,
+            </if>
+            <if test="schools_info_id!=null">
+                schools_info_id,
+            </if>
+            <if test="openid!=null">
+                openid,
+            </if>
+            <if test="address!=null">
+                address,
+            </if>
+            <if test="create_time!=null">
+                create_time,
+            </if>
+        </trim>
+        )
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="name!=null">
+                #{name},
+            </if>
+            <if test="sex!=null">
+                #{sex},
+            </if>
+            <if test="age!=null">
+                #{age},
+            </if>
+            <if test="identity!=null">
+                #{identity},
+            </if>
+            <if test="father_name!=null">
+                #{father_name},
+            </if>
+            <if test="mother_name!=null">
+                #{mother_name},
+            </if>
+            <if test="phone!=null">
+                #{phone},
+            </if>
+            <if test="schools_info_id!=null">
+                #{schools_info_id},
+            </if>
+            <if test="openid!=null">
+                #{openid},
+            </if>
+            <if test="address!=null">
+                #{address},
+            </if>
+            <if test="create_time!=null">
+                #{create_time},
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <delete id="deleteStudent" parameterType="Integer">
+        DELETE FROM student_info WHERE id = #{id}
+    </delete>
+</mapper>
